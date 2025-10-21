@@ -1,7 +1,7 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './style.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './style.css'
 
-const app = document.getElementById("app");
+const app = document.getElementById('app')
 app.innerHTML = `
   <div class="container mt-5">
     <h1>RSS Aggregator</h1>
@@ -14,10 +14,8 @@ app.innerHTML = `
     </form>
     <div id="feed-container" class="mt-4"></div>
   </div>
-`;
+`
 
-document.getElementById("rss-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const url = document.getElementById("rss-url").value;
-  console.log("Adding RSS:", url);
-});
+document.getElementById('rss-form').addEventListener('submit', (e) => {
+  e.preventDefault()
+})
