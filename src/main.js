@@ -16,7 +16,7 @@ app.innerHTML = `
     <form id="rss-form" class="mt-4">
       <div class="mb-3">
         <label for="rss-url" class="form-label">RSS URL</label>
-        <input type="url" class="form-control" id="rss-url" placeholder="https://example.com/rss" required>
+        <input type="url" class="form-control" id="rss-url" name="input" placeholder="https://example.com/rss" required>
       </div>
       <button type="submit" class="btn btn-primary">Add RSS</button>
     </form>
