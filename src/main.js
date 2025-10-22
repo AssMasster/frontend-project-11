@@ -1,7 +1,11 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './style.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
+import { state } from "./app/state.js";
+import { initView } from "./view/view.js";
 
-const app = document.getElementById('app')
+const watchedState = initView(state);
+
+const app = document.getElementById("app");
 app.innerHTML = `
   <div class="container mt-5">
     <h1>RSS Aggregator</h1>
@@ -14,8 +18,8 @@ app.innerHTML = `
     </form>
     <div id="feed-container" class="mt-4"></div>
   </div>
-`
+`;
 
-document.getElementById('rss-form').addEventListener('submit', (e) => {
-  e.preventDefault()
-})
+document.getElementById("rss-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+});
