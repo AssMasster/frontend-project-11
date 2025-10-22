@@ -27,6 +27,6 @@ app.innerHTML = `
 document.getElementById("rss-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  const url = formData.get("rss-url");
+  const url = formData.get("input");
   controller.handleFormSubmit(url);
 });
