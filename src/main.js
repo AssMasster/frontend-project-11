@@ -2,8 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { state } from "./app/state.js";
 import { initView } from "./view/view.js";
+import { initController } from "./app/controller.js";
 
 const watchedState = initView(state);
+const controller = initController(watchedState);
 
 window.watchedState = watchedState; //TESTING
 
@@ -24,4 +26,7 @@ app.innerHTML = `
 
 document.getElementById("rss-form").addEventListener("submit", (e) => {
   e.preventDefault();
+  const formData = new FormData(e.target);
+  const url = formData.get("rss-url");
+  controller.handleFormSubmit(url);
 });
