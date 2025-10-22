@@ -5,6 +5,8 @@ import { initView } from "./view/view.js";
 
 const watchedState = initView(state);
 
+window.watchedState = watchedState; //TESTING
+
 const app = document.getElementById("app");
 app.innerHTML = `
   <div class="container mt-5">
