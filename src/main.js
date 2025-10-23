@@ -38,13 +38,13 @@ function renderApp(i18nInstance) {
       </div>
       
       <h1>${i18nInstance.t("ui.title")}</h1>
-      <form id="rss-form" class="mt-4">
+      <form id="rss-form" class="mt-4" novalidate>
         <div class="mb-3">
           <label for="rss-url" class="form-label">${i18nInstance.t(
             "ui.urlLabel"
           )}</label>
           <input type="url" class="form-control" id="rss-url" name="input" 
-                 placeholder="${i18nInstance.t("ui.urlPlaceholder")}" required>
+                 placeholder="${i18nInstance.t("ui.urlPlaceholder")}">
         </div>
         <button type="submit" class="btn btn-primary">${i18nInstance.t(
           "ui.submitButton"
