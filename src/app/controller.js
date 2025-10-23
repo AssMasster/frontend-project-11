@@ -1,13 +1,13 @@
 import { validateUrl } from "../lib/validator.js";
 
-export function initController(watchedState) {
+export function initController(watchedState, i18nInstance) {
   // Функция-обработчик отправки формы
   function handleFormSubmit(url) {
     const existingUrls = watchedState.feeds.map((feed) => feed.url);
     watchedState.form.status = "validating";
     watchedState.form.errors = [];
 
-    validateUrl(url, existingUrls)
+    validateUrl(url, existingUrls, i18nInstance)
       .then((validUrl) => {
         watchedState.form.status = "success";
         watchedState.feeds.push({

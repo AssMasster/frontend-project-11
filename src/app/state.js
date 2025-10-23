@@ -1,4 +1,7 @@
 export const state = {
+  ui: {
+    lng: "en",
+  },
   form: {
     url: "",
     valid: true,
