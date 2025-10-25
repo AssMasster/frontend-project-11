@@ -1,4 +1,3 @@
-import { state } from "../app/state.js";
 import onChange from "on-change";
 
 export function initView(state, i18Instance) {
@@ -19,15 +18,12 @@ export function initView(state, i18Instance) {
     if (path === "feeds") {
       handleNewFeedAdded(value);
     }
-
     if (path === "loading.status") {
       handleLoadingStatus();
     }
-
     if (path === "posts") {
       handleNewPostAdded(value);
     }
-
     if (path === "ui.lng") {
       i18Instance.changeLanguage(value).then(() => {
         renderAllTexts(i18Instance);
@@ -115,49 +111,102 @@ export function initView(state, i18Instance) {
   }
 
   function updateErrorDisplay(errors, i18n) {
-    // TODO: показать ошибки пользователю
+    const feedbackElement = document.querySelector(".feedback");
+    if (!feedbackElement) return;
+
+    if (errors.length > 0) {
+      feedbackElement.textContent = errors[errors.length - 1];
+      feedbackElement.classList.add("text-danger");
+      feedbackElement.classList.remove("text-success");
+    } else {
+      feedbackElement.textContent = "";
+      feedbackElement.classList.remove("text-danger", "text-success");
+    }
   }
 
   function handleNewFeedAdded(feeds) {
-    const feedContainer = document.querySelector(".feeds-list"); //{id, title, url, description}
+    const feedContainer = document.querySelector(".feeds-list");
+    if (!feedContainer) {
+      console.error("❌ Не найден .feeds-list контейнер");
+      return;
+    }
+
+    // Очищаем и перерисовываем все фиды
+    feedContainer.innerHTML = "";
+
     feeds.forEach((feed) => {
       const feedElement = document.createElement("div");
+      feedElement.className = "feed-item mb-3 p-3 border rounded";
+
       const h3 = document.createElement("h3");
-      const pDescription = document.createElement("p");
+      h3.className = "h5";
       h3.textContent = feed.title;
+
+      const pDescription = document.createElement("p");
+      pDescription.className = "text-muted mb-0";
       pDescription.textContent = feed.description;
+
       feedElement.append(h3, pDescription);
       feedContainer.append(feedElement);
     });
+
+    console.log(`✅ Отрисовано фидов: ${feeds.length}`);
   }
+
   function handleNewPostAdded(posts) {
     const postsContainer = document.querySelector(".posts-list");
+    if (!postsContainer) {
+      console.error("❌ Не найден .posts-list контейнер");
+      return;
+    }
+
+    // Очищаем и перерисовываем все посты
+    postsContainer.innerHTML = "";
+
     posts.forEach((post) => {
       const postElement = document.createElement("div");
+      postElement.className = "post-item mb-3 p-3 border rounded";
+
       const h3 = document.createElement("h3");
-      const pDescription = document.createElement("p");
+      h3.className = "h6";
+      h3.textContent = post.title;
+
       const link = document.createElement("a");
       link.href = post.link;
-      link.textContent = post.title;
-      h3.textContent = post.title;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.className = "d-block mb-2";
+      link.textContent = post.link;
+
+      const pDescription = document.createElement("p");
+      pDescription.className = "text-muted small mb-0";
       pDescription.textContent = post.description;
+
       postElement.append(h3, link, pDescription);
-      postsContainer.append(feedElement);
+      postsContainer.append(postElement);
     });
+
+    console.log(`✅ Отрисовано постов: ${posts.length}`);
   }
-  function handleLoadingStatus(status) {
+
+  function handleLoadingStatus() {
+    const status = watchedState.loading.status;
     const button = document.querySelector("#rss-form button");
+    if (!button) return;
 
     switch (status) {
       case "loading":
         button.disabled = true;
-        button.textContent = "Loading...";
+        button.textContent = i18Instance.t("ui.loadingButton");
         break;
       case "succeeded":
       case "failed":
         button.disabled = false;
-        button.textContent = "Add RSS";
+        button.textContent = i18Instance.t("ui.submitButton");
         break;
+      default:
+        button.disabled = false;
+        button.textContent = i18Instance.t("ui.submitButton");
     }
   }
 
