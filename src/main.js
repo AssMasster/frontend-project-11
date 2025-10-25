@@ -50,7 +50,14 @@ function renderApp(i18nInstance) {
           "ui.submitButton"
         )}</button>
       </form>
-      <div id="feed-container" class="mt-4"></div>
+      <div id="feed-container" class="mt-4">
+        <h2>Фиды</h2>
+        <div class="feeds-list"></div>
+      </div>
+      <div id="posts-container">
+        <h2>Посты</h2>
+        <div class="posts-list"></div>
+      </div>
     </div>
   `;
 }

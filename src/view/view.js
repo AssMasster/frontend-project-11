@@ -17,7 +17,15 @@ export function initView(state, i18Instance) {
       updateErrorDisplay(value, i18Instance);
     }
     if (path === "feeds") {
-      handleNewFeedAdded();
+      handleNewFeedAdded(value);
+    }
+
+    if (path === "loading.status") {
+      handleLoadingStatus();
+    }
+
+    if (path === "posts") {
+      handleNewPostAdded(value);
     }
 
     if (path === "ui.lng") {
@@ -110,8 +118,47 @@ export function initView(state, i18Instance) {
     // TODO: показать ошибки пользователю
   }
 
-  function handleNewFeedAdded() {
-    // TODO: обновить список фидов
+  function handleNewFeedAdded(feeds) {
+    const feedContainer = document.querySelector(".feeds-list"); //{id, title, url, description}
+    feeds.forEach((feed) => {
+      const feedElement = document.createElement("div");
+      const h3 = document.createElement("h3");
+      const pDescription = document.createElement("p");
+      h3.textContent = feed.title;
+      pDescription.textContent = feed.description;
+      feedElement.append(h3, pDescription);
+      feedContainer.append(feedElement);
+    });
+  }
+  function handleNewPostAdded(posts) {
+    const postsContainer = document.querySelector(".posts-list");
+    posts.forEach((post) => {
+      const postElement = document.createElement("div");
+      const h3 = document.createElement("h3");
+      const pDescription = document.createElement("p");
+      const link = document.createElement("a");
+      link.href = post.link;
+      link.textContent = post.title;
+      h3.textContent = post.title;
+      pDescription.textContent = post.description;
+      postElement.append(h3, link, pDescription);
+      postsContainer.append(feedElement);
+    });
+  }
+  function handleLoadingStatus(status) {
+    const button = document.querySelector("#rss-form button");
+
+    switch (status) {
+      case "loading":
+        button.disabled = true;
+        button.textContent = "Loading...";
+        break;
+      case "succeeded":
+      case "failed":
+        button.disabled = false;
+        button.textContent = "Add RSS";
+        break;
+    }
   }
 
   return watchedState;

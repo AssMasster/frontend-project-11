@@ -9,5 +9,10 @@ export const state = {
     errors: [],
   },
   //feeds: [{name, description, dateAdded}]
-  feeds: [],
+  feeds: [], //{id, title, url, description}
+  posts: [], //{id, feedId, title, link, description}
+  loading: {
+    status: "idle", //'idle' | 'loading' | 'succeeded' | 'failed' | 'retrying'
+    error: null,
+  },
 };
