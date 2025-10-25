@@ -51,11 +51,11 @@ function renderApp(i18nInstance) {
         )}</button>
       </form>
       <div id="feed-container" class="mt-4">
-        <h2>Фиды</h2>
+        <h2>Feeds</h2>
         <div class="feeds-list"></div>
       </div>
       <div id="posts-container">
-        <h2>Посты</h2>
+        <h2>Posts</h2>
         <div class="posts-list"></div>
       </div>
     </div>
