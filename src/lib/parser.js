@@ -1,8 +1,19 @@
 export function parserRss(dataXml) {
   const domParser = new DOMParser();
   const data = domParser.parseFromString(dataXml, "text/xml");
-  const feedName = data.querySelector("channel title").textContent;
-  const feedDescription = data.querySelector("channel description").textContent;
+
+  const feedTitleElement = data.querySelector("channel title");
+  const feedDescriptionElement = data.querySelector("channel description");
+
+  if (!feedTitleElement) {
+    throw new Error("Invalid RSS: missing channel title");
+  }
+  if (!feedDescriptionElement) {
+    throw new Error("Invalid RSS: missing channel description");
+  }
+
+  const feedName = feedTitleElement.textContent;
+  const feedDescription = feedDescriptionElement.textContent;
 
   const result = {
     feed: {
@@ -11,11 +22,17 @@ export function parserRss(dataXml) {
     },
     posts: [],
   };
-
   data.querySelectorAll("item").forEach((item) => {
-    const postTitle = item.querySelector("title").textContent;
-    const postLink = item.querySelector("link").textContent;
-    const postDescription = item.querySelector("description").textContent;
+    const postTitleElement = item.querySelector("title");
+    const postLinkElement = item.querySelector("link");
+    const postDescriptionElement = item.querySelector("description");
+    if (!postTitleElement || !postLinkElement || !postDescriptionElement) {
+      return;
+    }
+
+    const postTitle = postTitleElement.textContent;
+    const postLink = postLinkElement.textContent;
+    const postDescription = postDescriptionElement.textContent;
 
     result.posts.push({
       title: postTitle,
