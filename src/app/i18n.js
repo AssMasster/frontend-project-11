@@ -9,7 +9,7 @@ export function initI18n() {
 
     i18Instance
       .init({
-        lng: "en",
+        lng: "ru",
         debag: true,
         resources,
       })
