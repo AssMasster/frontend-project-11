@@ -2,6 +2,7 @@ import { validateUrl } from "../lib/validator.js";
 import { getRss } from "../lib/rss.js";
 import { parserRss } from "../lib/parser.js";
 import { uniqIdWithPref } from "../lib/utils.js";
+import * as _ from "lodash";
 
 export function initController(watchedState, i18nInstance) {
   function handleFormSubmit(url) {
@@ -40,8 +41,65 @@ export function initController(watchedState, i18nInstance) {
         watchedState.loading.error = error.message;
       });
   }
+  function updateFeed(feed) {
+    return getRss(feed.url)
+      .then((xmlDoc) => {
+        const { posts } = parserRss(xmlDoc);
+
+        const newPosts = posts.filter((post) => {
+          const postExists = watchedState.posts.some(
+            (existingPost) => existingPost.link === post.link
+          );
+          return !postExists;
+        });
+
+        newPosts.forEach((post) => {
+          post.feedId = feed.id;
+          post.id = uniqIdWithPref("post");
+        });
+        if (newPosts.length > 0) {
+          watchedState.posts.unshift(...newPosts);
+          console.log(
+            `Добавлено ${newPosts.length} новых постов из фида "${feed.title}"`
+          );
+        }
+
+        return newPosts;
+      })
+      .catch((error) => {
+        console.error(`Ошибка обновления фида "${feed.title}":`, error);
+        return [];
+      });
+  }
+  function updateAllFeeds() {
+    if (watchedState.feeds.length === 0) {
+      console.log("Нет фидов для обновления");
+      return;
+    }
+
+    console.log(`Обновление ${watchedState.feeds.length} фидов...`);
+
+    const updatePromises = watchedState.feeds.map((feed) => updateFeed(feed));
+
+    Promise.all(updatePromises)
+      .then((results) => {
+        const allNewPosts = results.flat();
+        console.log(
+          `Обновление завершено. Новых постов: ${allNewPosts.length}`
+        );
+      })
+      .finally(() => {
+        setTimeout(updateAllFeeds, 5000);
+      });
+  }
+
+  function startAutoUpdate() {
+    console.log("Запуск авто-обновления...");
+    updateAllFeeds();
+  }
 
   return {
     handleFormSubmit,
+    startAutoUpdate,
   };
 }

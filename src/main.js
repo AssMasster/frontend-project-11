@@ -15,6 +15,8 @@ initI18n()
     renderApp(i18nInstance);
     setupEventListeners(controller, watchedState);
 
+    controller.startAutoUpdate();
+
     window.i18n = i18nInstance;
     window.watchedState = watchedState;
   })
