@@ -26,9 +26,14 @@ export function initController(watchedState, i18nInstance) {
             post.feedId = feed.id;
             post.id = uniqIdWithPref("post");
           });
+          const wasEmpty = watchedState.feeds.length === 0;
 
           watchedState.feeds.push(feed);
           watchedState.posts.push(...posts);
+
+          if (wasEmpty) {
+            startAutoUpdate();
+          }
           watchedState.form.status = "success";
           watchedState.loading.status = "succeeded";
         });
