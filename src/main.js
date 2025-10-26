@@ -94,10 +94,9 @@ function setupEventListeners(controller, watchedState) {
   document.addEventListener("click", (e) => {
     if (
       e.target.classList.contains("btn-outline-primary") &&
-      e.target.textContent === "Просмотр"
+      e.target.textContent === "Open"
     ) {
       const postId = e.target.dataset.postId;
-      // Найдем пост по ID
       const post = watchedState.posts.find((p) => p.id === postId);
       if (post) {
         controller.showPostModal(post, watchedState);
