@@ -1,6 +1,7 @@
 export const state = {
   ui: {
     lng: "en",
+    readPostsId: [],
   },
   form: {
     url: "",

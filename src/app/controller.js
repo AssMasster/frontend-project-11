@@ -102,9 +102,21 @@ export function initController(watchedState, i18nInstance) {
     console.log("Запуск авто-обновления...");
     updateAllFeeds();
   }
+  function showPostModal(post, watchedState) {
+    document.getElementById("post-modal-title").textContent = post.title;
+    document.getElementById("post-modal-body").textContent = post.description;
+
+    const modal = new bootstrap.Modal(document.getElementById("post-modal"));
+    modal.show();
+
+    if (!watchedState.ui.readPostsId.includes(post.id)) {
+      watchedState.ui.readPostsId.push(post.id);
+    }
+  }
 
   return {
     handleFormSubmit,
     startAutoUpdate,
+    showPostModal,
   };
 }

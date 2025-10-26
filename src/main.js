@@ -60,6 +60,20 @@ function renderApp(i18nInstance) {
         <h2>Posts</h2>
         <div class="posts-list"></div>
       </div>
+      <div class="modal fade" id="post-modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="post-modal-title"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="post-modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   `;
 }
@@ -76,5 +90,18 @@ function setupEventListeners(controller, watchedState) {
       const lng = e.target.dataset.lng;
       watchedState.ui.lng = lng;
     });
+  });
+  document.addEventListener("click", (e) => {
+    if (
+      e.target.classList.contains("btn-outline-primary") &&
+      e.target.textContent === "Просмотр"
+    ) {
+      const postId = e.target.dataset.postId;
+      // Найдем пост по ID
+      const post = watchedState.posts.find((p) => p.id === postId);
+      if (post) {
+        controller.showPostModal(post, watchedState);
+      }
+    }
   });
 }

@@ -6,6 +6,10 @@ export function initView(state, i18Instance) {
   const watchedState = onChange(state, (path, value, oldValue) => {
     console.log("State изменился:", path, "было", oldValue, "стало", value);
 
+    if (path === "ui.readPostsId") {
+      updatePostStyles();
+    }
+
     if (path === "form.status") {
       updateFormStatus(value, i18Instance);
     }
@@ -160,35 +164,47 @@ export function initView(state, i18Instance) {
       return;
     }
 
-    // Очищаем и перерисовываем все посты
     postsContainer.innerHTML = "";
 
     posts.forEach((post) => {
+      const isRead = watchedState.ui.readPostsId.includes(post.id);
+      const titleClass = isRead ? "fw-normal" : "fw-bold";
+
       const postElement = document.createElement("div");
       postElement.className = "post-item mb-3 p-3 border rounded";
+      postElement.dataset.postId = post.id;
 
-      const h3 = document.createElement("h3");
-      h3.className = "h6";
-      h3.textContent = post.title;
+      const titleLink = document.createElement("a");
+      titleLink.href = post.link;
+      titleLink.target = "_blank";
+      titleLink.rel = "noopener noreferrer";
+      titleLink.className = `${titleClass} h6 d-block mb-2 text-decoration-none`;
+      titleLink.textContent = post.title;
+
+      const previewButton = document.createElement("button");
+      previewButton.type = "button";
+      previewButton.className = "btn btn-outline-primary btn-sm me-2";
+      previewButton.textContent = "Open";
+      previewButton.dataset.postId = post.id;
 
       const link = document.createElement("a");
       link.href = post.link;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.className = "d-block mb-2";
+      link.className = "text-muted small d-block mb-1";
       link.textContent = post.link;
 
-      const pDescription = document.createElement("p");
-      pDescription.className = "text-muted small mb-0";
-      pDescription.textContent = post.description;
+      const headerContainer = document.createElement("div");
+      headerContainer.className =
+        "d-flex justify-content-between align-items-center mb-2";
+      headerContainer.append(titleLink, previewButton);
 
-      postElement.append(h3, link, pDescription);
+      postElement.append(headerContainer, link);
       postsContainer.append(postElement);
     });
 
-    console.log(`✅ Отрисовано постов: ${posts.length}`);
+    console.log(`Отрисовано постов: ${posts.length}`);
   }
-
   function handleLoadingStatus() {
     const status = watchedState.loading.status;
     const button = document.querySelector("#rss-form button");
@@ -208,6 +224,25 @@ export function initView(state, i18Instance) {
         button.disabled = false;
         button.textContent = i18Instance.t("ui.submitButton");
     }
+  }
+
+  function updatePostStyles() {
+    const postElements = document.querySelectorAll(".post-item");
+    postElements.forEach((postElement) => {
+      const postId = postElement.dataset.postId;
+      const titleLink = postElement.querySelector("a.h6");
+      if (!titleLink) return;
+
+      const isRead = watchedState.ui.readPostsId.includes(postId);
+
+      if (isRead) {
+        titleLink.classList.remove("fw-bold");
+        titleLink.classList.add("fw-normal");
+      } else {
+        titleLink.classList.remove("fw-normal");
+        titleLink.classList.add("fw-bold");
+      }
+    });
   }
 
   return watchedState;
