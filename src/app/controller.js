@@ -2,7 +2,6 @@ import { validateUrl } from "../lib/validator.js";
 import { getRss } from "../lib/rss.js";
 import { parserRss } from "../lib/parser.js";
 import { uniqIdWithPref } from "../lib/utils.js";
-import * as _ from "lodash";
 
 export function initController(watchedState, i18nInstance) {
   function handleFormSubmit(url) {

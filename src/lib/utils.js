@@ -1,6 +1,6 @@
-import _ from "lodash";
+import _ from 'lodash'
 
-export function uniqIdWithPref(pref = "") {
-  const uniqId = _.uniqueId();
-  return `${pref}_${uniqId}`;
+export function uniqIdWithPref(pref = '') {
+  const uniqId = _.uniqueId()
+  return `${pref}_${uniqId}`
 }

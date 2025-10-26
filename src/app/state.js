@@ -1,19 +1,19 @@
 export const state = {
   ui: {
-    lng: "en",
+    lng: 'en',
     readPostsId: [],
   },
   form: {
-    url: "",
+    url: '',
     valid: true,
-    status: "", //filling, validating, error, success
+    status: '', //filling, validating, error, success
     errors: [],
   },
   //feeds: [{name, description, dateAdded}]
   feeds: [], //{id, title, url, description}
   posts: [], //{id, feedId, title, link, description}
   loading: {
-    status: "idle", //'idle' | 'loading' | 'succeeded' | 'failed' | 'retrying'
+    status: 'idle', //'idle' | 'loading' | 'succeeded' | 'failed' | 'retrying'
     error: null,
   },
-};
+}
