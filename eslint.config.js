@@ -22,7 +22,7 @@ export default [
       'prefer-promise-reject-errors': 'error',
 
       'no-unused-vars': 'warn',
-      'no-console': 'warn',
+      'no-console': 'off',
       'no-undef': 'error',
       eqeqeq: ['error', 'always'],
 
