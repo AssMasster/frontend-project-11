@@ -196,9 +196,12 @@ export function initView(state, i18Instance) {
       postElement.className = "post-item mb-3 p-3 border rounded";
       postElement.dataset.postId = post.id;
 
-      const titleSpan = document.createElement("span");
-      titleSpan.className = `${titleClass} h6 me-2`;
-      titleSpan.textContent = post.title;
+      const titleLink = document.createElement("a");
+      titleLink.href = post.link;
+      titleLink.target = "_blank";
+      titleLink.rel = "noopener noreferrer";
+      titleLink.className = `${titleClass} me-2`;
+      titleLink.textContent = post.title;
 
       const previewButton = document.createElement("button");
       previewButton.type = "button";
@@ -216,7 +219,7 @@ export function initView(state, i18Instance) {
       const headerContainer = document.createElement("div");
       headerContainer.className =
         "d-flex justify-content-between align-items-center mb-2";
-      headerContainer.append(titleSpan, previewButton);
+      headerContainer.append(titleLink, previewButton);
 
       postElement.append(headerContainer, link);
       postsContainer.append(postElement);
