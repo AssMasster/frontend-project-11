@@ -11,9 +11,9 @@ export function initController(watchedState, i18nInstance) {
     watchedState.loading.status = 'idle'
 
     validateUrl(url, existingUrls, i18nInstance)
-      .then(validUrl => {
+      .then((validUrl) => {
         watchedState.loading.status = 'loading'
-        return getRss(validUrl).then(xmlDoc => {
+        return getRss(validUrl).then((xmlDoc) => {
           try {
             const { feed, posts } = parserRss(xmlDoc)
 
@@ -21,7 +21,7 @@ export function initController(watchedState, i18nInstance) {
             feed.id = feedId
             feed.url = validUrl
 
-            posts.forEach(post => {
+            posts.forEach((post) => {
               post.feedId = feed.id
               post.id = uniqIdWithPref('post')
             })
@@ -45,7 +45,7 @@ export function initController(watchedState, i18nInstance) {
           }
         })
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Ошибка при обработке формы:', error.message)
 
         watchedState.form.status = 'error'
@@ -57,17 +57,17 @@ export function initController(watchedState, i18nInstance) {
   }
   function updateFeed(feed) {
     return getRss(feed.url)
-      .then(xmlDoc => {
+      .then((xmlDoc) => {
         const { posts } = parserRss(xmlDoc)
 
-        const newPosts = posts.filter(post => {
+        const newPosts = posts.filter((post) => {
           const postExists = watchedState.posts.some(
             existingPost => existingPost.link === post.link,
           )
           return !postExists
         })
 
-        newPosts.forEach(post => {
+        newPosts.forEach((post) => {
           post.feedId = feed.id
           post.id = uniqIdWithPref('post')
         })
@@ -80,7 +80,7 @@ export function initController(watchedState, i18nInstance) {
 
         return newPosts
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(`Ошибка обновления фида "${feed.title}":`, error)
         return []
       })
@@ -96,7 +96,7 @@ export function initController(watchedState, i18nInstance) {
     const updatePromises = watchedState.feeds.map(feed => updateFeed(feed))
 
     Promise.all(updatePromises)
-      .then(results => {
+      .then((results) => {
         const allNewPosts = results.flat()
         console.log(
           `Обновление завершено. Новых постов: ${allNewPosts.length}`,
