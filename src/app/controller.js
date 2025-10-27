@@ -14,30 +14,35 @@ export function initController(watchedState, i18nInstance) {
       .then((validUrl) => {
         watchedState.loading.status = "loading";
         return getRss(validUrl).then((xmlDoc) => {
-          const { feed, posts } = parserRss(xmlDoc);
+          try {
+            const { feed, posts } = parserRss(xmlDoc);
 
-          const feedId = uniqIdWithPref("feed");
-          feed.id = feedId;
-          feed.url = validUrl;
+            const feedId = uniqIdWithPref("feed");
+            feed.id = feedId;
+            feed.url = validUrl;
 
-          posts.forEach((post) => {
-            post.feedId = feed.id;
-            post.id = uniqIdWithPref("post");
-          });
-          const wasEmpty = watchedState.feeds.length === 0;
+            posts.forEach((post) => {
+              post.feedId = feed.id;
+              post.id = uniqIdWithPref("post");
+            });
+            const wasEmpty = watchedState.feeds.length === 0;
 
-          watchedState.feeds.push(feed);
-          watchedState.posts.push(...posts);
+            watchedState.feeds.push(feed);
+            watchedState.posts.push(...posts);
 
-          if (wasEmpty) {
-            startAutoUpdate();
+            if (wasEmpty) {
+              startAutoUpdate();
+            }
+            watchedState.form.status = "success";
+            watchedState.loading.status = "succeeded";
+          } catch (parseError) {
+            console.log("Ошибка парсинга RSS:", parseError);
+            throw new Error(i18nInstance.t("ui.errors.invalidRss"));
           }
-          watchedState.form.status = "success";
-          watchedState.loading.status = "succeeded";
         });
       })
       .catch((error) => {
-        console.log("Ошибка при обработке формы:", error);
+        console.log("Ошибка при обработке формы:", error.message);
 
         watchedState.form.status = "error";
         watchedState.form.valid = false;
