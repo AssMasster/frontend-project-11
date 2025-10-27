@@ -154,7 +154,7 @@ export function initView(state, i18Instance) {
   function handleNewFeedAdded(feeds) {
     const feedContainer = document.querySelector(".feeds-list");
     if (!feedContainer) {
-      console.error(" Не найден .feeds-list контейнер");
+      console.error("Не найден .feeds-list контейнер");
       return;
     }
 
