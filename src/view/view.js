@@ -60,7 +60,7 @@ export function initView(state, i18Instance) {
   }
 
   function updateLanguageButtons(activeLng) {
-    document.querySelectorAll('[data-lng]').forEach(button => {
+    document.querySelectorAll('[data-lng]').forEach((button) => {
       const isActive = button.dataset.lng === activeLng
       button.classList.toggle('btn-primary', isActive)
       button.classList.toggle('btn-outline-primary', !isActive)
@@ -163,7 +163,7 @@ export function initView(state, i18Instance) {
 
     feedContainer.innerHTML = ''
 
-    feeds.forEach(feed => {
+    feeds.forEach((feed) => {
       const feedElement = document.createElement('div')
       feedElement.className = 'feed-item mb-3 p-3 border rounded'
 
@@ -191,7 +191,7 @@ export function initView(state, i18Instance) {
 
     postsContainer.innerHTML = ''
 
-    posts.forEach(post => {
+    posts.forEach((post) => {
       const isRead = watchedState.ui.readPostsId.includes(post.id)
       const titleClass = isRead ? 'fw-normal' : 'fw-bold'
 
@@ -220,8 +220,8 @@ export function initView(state, i18Instance) {
       link.textContent = post.link
 
       const headerContainer = document.createElement('div')
-      headerContainer.className =
-        'd-flex justify-content-between align-items-center mb-2'
+      headerContainer.className
+        = 'd-flex justify-content-between align-items-center mb-2'
       headerContainer.append(titleLink, previewButton)
 
       postElement.append(headerContainer, link)
@@ -253,7 +253,7 @@ export function initView(state, i18Instance) {
 
   function updatePostStyles() {
     const postElements = document.querySelectorAll('.post-item')
-    postElements.forEach(postElement => {
+    postElements.forEach((postElement) => {
       const postId = postElement.dataset.postId
       const titleLink = postElement.querySelector('a[class*="fw-"]')
       if (!titleLink) return

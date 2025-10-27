@@ -35,10 +35,10 @@ export default [
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
       '@stylistic/quote-props': ['error', 'consistent-as-needed'],
-      '@stylistic/arrow-parens': ['error', 'as-needed'],
+      '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/brace-style': ['error', 'stroustrup'],
       '@stylistic/spaced-comment': ['error', 'always'],
-      '@stylistic/operator-linebreak': ['error', 'after'],
+      '@stylistic/operator-linebreak': ['error', 'before'],
     },
   },
 ]
