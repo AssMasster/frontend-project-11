@@ -95,7 +95,7 @@ function setupEventListeners(controller, watchedState) {
   document.addEventListener("click", (e) => {
     if (
       e.target.classList.contains("btn-outline-primary") &&
-      e.target.textContent === "Open"
+      e.target.textContent === "Просмотр"
     ) {
       const postId = e.target.dataset.postId;
       const post = watchedState.posts.find((p) => p.id === postId);
