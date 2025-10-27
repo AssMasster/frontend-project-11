@@ -79,6 +79,7 @@ export function initView(state, i18Instance) {
         input.disabled = false;
         input.value = "";
         input.focus();
+        showSuccessMessage("RSS успешно загружен");
         setTimeout(() => {
           watchedState.form.status = "filling";
         }, 100);
@@ -92,7 +93,23 @@ export function initView(state, i18Instance) {
         button.textContent = i18n.t("ui.submitButton");
     }
   }
+  function showSuccessMessage(message) {
+    let feedbackElement = document.querySelector(".feedback");
+    if (!feedbackElement) {
+      feedbackElement = document.createElement("div");
+      feedbackElement.className = "feedback mt-2";
+      const form = document.querySelector("#rss-form");
+      form.appendChild(feedbackElement);
+    }
 
+    feedbackElement.textContent = message;
+    feedbackElement.className = "feedback mt-2 text-success";
+    feedbackElement.style.display = "block";
+
+    setTimeout(() => {
+      feedbackElement.style.display = "none";
+    }, 5000);
+  }
   function renderInitialTexts(i18n) {
     const title = document.querySelector("h1");
     const label = document.querySelector('label[for="rss-url"]');
