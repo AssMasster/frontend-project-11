@@ -3,7 +3,7 @@ import { validateUrl } from "../lib/validator.js";
 import { getRss } from "../lib/rss.js";
 import { parserRss } from "../lib/parser.js";
 import { uniqIdWithPref } from "../lib/utils.js";
-import bootstrap from "bootstrap";
+import * as bootstrap from "bootstrap";
 
 export function initController(watchedState, i18nInstance) {
   function handleFormSubmit(url) {
