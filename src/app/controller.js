@@ -13,7 +13,6 @@ export function initController(watchedState, i18nInstance) {
     validateUrl(url, existingUrls, i18nInstance)
       .then((validUrl) => {
         watchedState.loading.status = "loading";
-
         return getRss(validUrl).then((xmlDoc) => {
           const { feed, posts } = parserRss(xmlDoc);
 
@@ -38,9 +37,11 @@ export function initController(watchedState, i18nInstance) {
         });
       })
       .catch((error) => {
+        console.log("Ошибка при обработке формы:", error);
+
         watchedState.form.status = "error";
         watchedState.form.valid = false;
-        watchedState.form.errors.push(error.message);
+        watchedState.form.errors = [error.message];
         watchedState.loading.status = "failed";
         watchedState.loading.error = error.message;
       });
