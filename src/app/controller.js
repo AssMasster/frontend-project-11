@@ -72,9 +72,7 @@ export function initController(watchedState, i18nInstance) {
         })
         if (newPosts.length > 0) {
           watchedState.posts.unshift(...newPosts)
-          console.log(
-            `Добавлено ${newPosts.length} новых постов из фида "${feed.title}"`,
-          )
+          console.log(`Добавлено ${newPosts.length} новых постов из фида "${feed.title}"`)
         }
 
         return newPosts
@@ -97,9 +95,7 @@ export function initController(watchedState, i18nInstance) {
     Promise.all(updatePromises)
       .then((results) => {
         const allNewPosts = results.flat()
-        console.log(
-          `Обновление завершено. Новых постов: ${allNewPosts.length}`,
-        )
+        console.log(`Обновление завершено. Новых постов: ${allNewPosts.length}`)
       })
       .finally(() => {
         setTimeout(updateAllFeeds, 5000)

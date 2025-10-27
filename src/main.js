@@ -42,16 +42,12 @@ function renderApp(i18nInstance) {
       <h1>${i18nInstance.t('ui.title')}</h1>
       <form id="rss-form" class="mt-4" novalidate>
         <div class="mb-3">
-          <label for="rss-url" class="form-label">${i18nInstance.t(
-    'ui.urlLabel',
-  )}</label>
+          <label for="rss-url" class="form-label">${i18nInstance.t('ui.urlLabel')}</label>
           <input type="url" class="form-control" id="rss-url" name="input" aria-label="url"
                  placeholder="${i18nInstance.t('ui.urlPlaceholder')}">
                  <div class="feedback mt-2"></div>
         </div>
-        <button type="submit" class="btn btn-primary">${i18nInstance.t(
-    'ui.submitButton',
-  )}</button>
+        <button type="submit" class="btn btn-primary">${i18nInstance.t('ui.submitButton')}</button>
       </form>
       <div id="feed-container" class="mt-4">
         <h2>Feeds</h2>
@@ -93,10 +89,7 @@ function setupEventListeners(controller, watchedState) {
     })
   })
   document.addEventListener('click', (e) => {
-    if (
-      e.target.classList.contains('btn-outline-primary') &&
-      e.target.textContent === 'Просмотр'
-    ) {
+    if (e.target.classList.contains('btn-outline-primary') && e.target.textContent === 'Просмотр') {
       const postId = e.target.dataset.postId
       const post = watchedState.posts.find((p) => p.id === postId)
       if (post) {
