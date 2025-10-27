@@ -2,18 +2,19 @@ import { validateUrl } from '../lib/validator.js'
 import { getRss } from '../lib/rss.js'
 import { parserRss } from '../lib/parser.js'
 import { uniqIdWithPref } from '../lib/utils.js'
+import { bootstrap } from 'bootstrap'
 
 export function initController(watchedState, i18nInstance) {
   function handleFormSubmit(url) {
-    const existingUrls = watchedState.feeds.map((feed) => feed.url)
+    const existingUrls = watchedState.feeds.map(feed => feed.url)
     watchedState.form.status = 'validating'
     watchedState.form.errors = []
     watchedState.loading.status = 'idle'
 
     validateUrl(url, existingUrls, i18nInstance)
-      .then((validUrl) => {
+      .then(validUrl => {
         watchedState.loading.status = 'loading'
-        return getRss(validUrl).then((xmlDoc) => {
+        return getRss(validUrl).then(xmlDoc => {
           try {
             const { feed, posts } = parserRss(xmlDoc)
 
@@ -21,7 +22,7 @@ export function initController(watchedState, i18nInstance) {
             feed.id = feedId
             feed.url = validUrl
 
-            posts.forEach((post) => {
+            posts.forEach(post => {
               post.feedId = feed.id
               post.id = uniqIdWithPref('post')
             })
@@ -45,7 +46,7 @@ export function initController(watchedState, i18nInstance) {
           }
         })
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Ошибка при обработке формы:', error.message)
 
         watchedState.form.status = 'error'
@@ -57,28 +58,30 @@ export function initController(watchedState, i18nInstance) {
   }
   function updateFeed(feed) {
     return getRss(feed.url)
-      .then((xmlDoc) => {
+      .then(xmlDoc => {
         const { posts } = parserRss(xmlDoc)
 
-        const newPosts = posts.filter((post) => {
+        const newPosts = posts.filter(post => {
           const postExists = watchedState.posts.some(
-            (existingPost) => existingPost.link === post.link,
+            existingPost => existingPost.link === post.link,
           )
           return !postExists
         })
 
-        newPosts.forEach((post) => {
+        newPosts.forEach(post => {
           post.feedId = feed.id
           post.id = uniqIdWithPref('post')
         })
         if (newPosts.length > 0) {
           watchedState.posts.unshift(...newPosts)
-          console.log(`Добавлено ${newPosts.length} новых постов из фида "${feed.title}"`)
+          console.log(
+            `Добавлено ${newPosts.length} новых постов из фида "${feed.title}"`,
+          )
         }
 
         return newPosts
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(`Ошибка обновления фида "${feed.title}":`, error)
         return []
       })
@@ -91,12 +94,14 @@ export function initController(watchedState, i18nInstance) {
 
     console.log(`Обновление ${watchedState.feeds.length} фидов...`)
 
-    const updatePromises = watchedState.feeds.map((feed) => updateFeed(feed))
+    const updatePromises = watchedState.feeds.map(feed => updateFeed(feed))
 
     Promise.all(updatePromises)
-      .then((results) => {
+      .then(results => {
         const allNewPosts = results.flat()
-        console.log(`Обновление завершено. Новых постов: ${allNewPosts.length}`)
+        console.log(
+          `Обновление завершено. Новых постов: ${allNewPosts.length}`,
+        )
       })
       .finally(() => {
         setTimeout(updateAllFeeds, 5000)

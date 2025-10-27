@@ -22,7 +22,7 @@ export function parserRss(dataXml) {
     },
     posts: [],
   }
-  data.querySelectorAll('item').forEach((item) => {
+  data.querySelectorAll('item').forEach(item => {
     const postTitleElement = item.querySelector('title')
     const postLinkElement = item.querySelector('link')
     const postDescriptionElement = item.querySelector('description')

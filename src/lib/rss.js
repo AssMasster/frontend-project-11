@@ -20,7 +20,7 @@ export function getRss(rssUrl) {
         throw new Error('Invalid response format from All Origins')
       }
     })
-    .catch((error) => {
+    .catch(error => {
       console.error('Ошибка загрузки RSS:', error)
 
       if (error.response) {
