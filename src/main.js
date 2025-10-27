@@ -6,7 +6,7 @@ import { initController } from './app/controller.js'
 import { initI18n } from './app/i18n.js'
 
 initI18n()
-  .then((i18nInstance) => {
+  .then(i18nInstance => {
     console.log('i18n готов, создаём приложение...')
 
     const watchedState = initView(state, i18nInstance)
@@ -20,7 +20,7 @@ initI18n()
     window.i18n = i18nInstance
     window.watchedState = watchedState
   })
-  .catch((error) => {
+  .catch(error => {
     console.log('не удалось инициализировать', error)
   })
 
@@ -76,22 +76,22 @@ function renderApp(i18nInstance) {
 }
 
 function setupEventListeners(controller, watchedState) {
-  document.getElementById('rss-form').addEventListener('submit', (e) => {
+  document.getElementById('rss-form').addEventListener('submit', e => {
     e.preventDefault()
     const formData = new FormData(e.target)
     const url = formData.get('input')
     controller.handleFormSubmit(url)
   })
-  document.querySelectorAll('[data-lng]').forEach((button) => {
-    button.addEventListener('click', (e) => {
+  document.querySelectorAll('[data-lng]').forEach(button => {
+    button.addEventListener('click', e => {
       const lng = e.target.dataset.lng
       watchedState.ui.lng = lng
     })
   })
-  document.addEventListener('click', (e) => {
+  document.addEventListener('click', e => {
     if (e.target.classList.contains('btn-outline-primary') && e.target.textContent === 'Просмотр') {
       const postId = e.target.dataset.postId
-      const post = watchedState.posts.find((p) => p.id === postId)
+      const post = watchedState.posts.find(p => p.id === postId)
       if (post) {
         controller.showPostModal(post, watchedState)
       }

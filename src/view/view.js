@@ -38,7 +38,7 @@ export function initView(state, i18Instance) {
 
   function renderAllTexts(i18n) {
     const elements = {
-      h1: 'ui.title',
+      'h1': 'ui.title',
       'label[for="rss-url"]': 'ui.urlLabel',
       '#rss-url': 'ui.urlPlaceholder',
       '#rss-form button[type="submit"]': 'ui.submitButton',
@@ -51,7 +51,8 @@ export function initView(state, i18Instance) {
       if (element) {
         if (selector === '#rss-url') {
           element.placeholder = i18n.t(key)
-        } else {
+        }
+        else {
           element.textContent = i18n.t(key)
         }
       }
@@ -59,7 +60,7 @@ export function initView(state, i18Instance) {
   }
 
   function updateLanguageButtons(activeLng) {
-    document.querySelectorAll('[data-lng]').forEach((button) => {
+    document.querySelectorAll('[data-lng]').forEach(button => {
       const isActive = button.dataset.lng === activeLng
       button.classList.toggle('btn-primary', isActive)
       button.classList.toggle('btn-outline-primary', !isActive)
@@ -71,26 +72,26 @@ export function initView(state, i18Instance) {
     const button = document.querySelector('#rss-form button')
 
     switch (value) {
-    case 'validating':
-      input.disabled = true
-      button.textContent = i18n.t('ui.checkingButton')
-      break
-    case 'success':
-      input.disabled = false
-      input.value = ''
-      input.focus()
-      showSuccessMessage('RSS успешно загружен')
-      setTimeout(() => {
-        watchedState.form.status = 'filling'
-      }, 100)
-      break
-    case 'error':
-      input.disabled = false
-      button.textContent = i18n.t('ui.submitButton')
-      break
-    default:
-      input.disabled = false
-      button.textContent = i18n.t('ui.submitButton')
+      case 'validating':
+        input.disabled = true
+        button.textContent = i18n.t('ui.checkingButton')
+        break
+      case 'success':
+        input.disabled = false
+        input.value = ''
+        input.focus()
+        showSuccessMessage('RSS успешно загружен')
+        setTimeout(() => {
+          watchedState.form.status = 'filling'
+        }, 100)
+        break
+      case 'error':
+        input.disabled = false
+        button.textContent = i18n.t('ui.submitButton')
+        break
+      default:
+        input.disabled = false
+        button.textContent = i18n.t('ui.submitButton')
     }
   }
   function showSuccessMessage(message) {
@@ -122,7 +123,8 @@ export function initView(state, i18Instance) {
     const input = document.querySelector('#rss-url')
     if (isValid) {
       input.classList.remove('is-invalid')
-    } else {
+    }
+    else {
       input.classList.add('is-invalid')
     }
   }
@@ -140,7 +142,8 @@ export function initView(state, i18Instance) {
 
       const input = document.querySelector('#rss-url')
       input.classList.add('is-invalid')
-    } else {
+    }
+    else {
       feedbackElement.textContent = ''
       feedbackElement.classList.add('d-none')
       feedbackElement.classList.remove('text-danger', 'text-success')
@@ -160,7 +163,7 @@ export function initView(state, i18Instance) {
 
     feedContainer.innerHTML = ''
 
-    feeds.forEach((feed) => {
+    feeds.forEach(feed => {
       const feedElement = document.createElement('div')
       feedElement.className = 'feed-item mb-3 p-3 border rounded'
 
@@ -188,7 +191,7 @@ export function initView(state, i18Instance) {
 
     postsContainer.innerHTML = ''
 
-    posts.forEach((post) => {
+    posts.forEach(post => {
       const isRead = watchedState.ui.readPostsId.includes(post.id)
       const titleClass = isRead ? 'fw-normal' : 'fw-bold'
 
@@ -233,24 +236,24 @@ export function initView(state, i18Instance) {
     if (!button) return
 
     switch (status) {
-    case 'loading':
-      button.disabled = true
-      button.textContent = i18Instance.t('ui.loadingButton')
-      break
-    case 'succeeded':
-    case 'failed':
-      button.disabled = false
-      button.textContent = i18Instance.t('ui.submitButton')
-      break
-    default:
-      button.disabled = false
-      button.textContent = i18Instance.t('ui.submitButton')
+      case 'loading':
+        button.disabled = true
+        button.textContent = i18Instance.t('ui.loadingButton')
+        break
+      case 'succeeded':
+      case 'failed':
+        button.disabled = false
+        button.textContent = i18Instance.t('ui.submitButton')
+        break
+      default:
+        button.disabled = false
+        button.textContent = i18Instance.t('ui.submitButton')
     }
   }
 
   function updatePostStyles() {
     const postElements = document.querySelectorAll('.post-item')
-    postElements.forEach((postElement) => {
+    postElements.forEach(postElement => {
       const postId = postElement.dataset.postId
       const titleLink = postElement.querySelector('a[class*="fw-"]')
       if (!titleLink) return
@@ -260,7 +263,8 @@ export function initView(state, i18Instance) {
       if (isRead) {
         titleLink.classList.remove('fw-bold')
         titleLink.classList.add('fw-normal')
-      } else {
+      }
+      else {
         titleLink.classList.remove('fw-normal')
         titleLink.classList.add('fw-bold')
       }

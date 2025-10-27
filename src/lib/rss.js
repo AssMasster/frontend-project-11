@@ -14,19 +14,22 @@ export function getRss(rssUrl) {
 
       if (response.data && response.data.contents) {
         return response.data.contents
-      } else {
+      }
+      else {
         console.error('Неожиданная структура ответа:', response.data)
         throw new Error('Invalid response format from All Origins')
       }
     })
-    .catch((error) => {
+    .catch(error => {
       console.error('Ошибка загрузки RSS:', error)
 
       if (error.response) {
         throw new Error(`Ошибка сервера: ${error.response.status}`)
-      } else if (error.request) {
+      }
+      else if (error.request) {
         throw new Error('Ошибка сети')
-      } else {
+      }
+      else {
         throw new Error(`Ошибка запроса: ${error.message}`)
       }
     })

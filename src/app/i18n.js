@@ -17,7 +17,7 @@ export function initI18n() {
         console.log('seccess')
         resolve(i18Instance)
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('error', error)
         reject(error)
       })
