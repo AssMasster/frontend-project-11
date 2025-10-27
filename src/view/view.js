@@ -200,7 +200,7 @@ export function initView(state, i18Instance) {
       titleLink.href = post.link;
       titleLink.target = "_blank";
       titleLink.rel = "noopener noreferrer";
-      titleLink.className = `${titleClass} me-2`;
+      titleLink.className = `${titleClass}`;
       titleLink.textContent = post.title;
 
       const previewButton = document.createElement("button");
