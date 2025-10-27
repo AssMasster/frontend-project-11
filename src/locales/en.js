@@ -10,6 +10,7 @@ export default {
     submitButton: "Add RSS",
     checkingButton: "Checking...",
     errors: {
+      invalidRss: "The resource does not contain valid RSS",
       required: "Required field",
       invalidUrl: "The link must be valid URL",
       duplicate: "RSS already exists",

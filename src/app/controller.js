@@ -36,6 +36,9 @@ export function initController(watchedState, i18nInstance) {
             watchedState.form.status = "success";
             watchedState.loading.status = "succeeded";
           } catch (parseError) {
+            console.log("🔍 i18nInstance:", i18nInstance);
+            console.log("🔍 Текущий язык:", i18nInstance.language);
+            console.log("🔍 Доступные namespace:", i18nInstance.options.ns);
             console.log("Ошибка парсинга RSS:", parseError);
             throw new Error(i18nInstance.t("ui.errors.invalidRss"));
           }
