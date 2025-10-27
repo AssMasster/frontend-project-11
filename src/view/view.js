@@ -252,7 +252,7 @@ export function initView(state, i18Instance) {
     const postElements = document.querySelectorAll(".post-item");
     postElements.forEach((postElement) => {
       const postId = postElement.dataset.postId;
-      const titleLink = postElement.querySelector("a.h6");
+      const titleLink = postElement.querySelector('a[class*="fw-"]');
       if (!titleLink) return;
 
       const isRead = watchedState.ui.readPostsId.includes(postId);
