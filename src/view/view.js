@@ -196,30 +196,27 @@ export function initView(state, i18Instance) {
       postElement.className = "post-item mb-3 p-3 border rounded";
       postElement.dataset.postId = post.id;
 
-      const titleLink = document.createElement("a");
-      titleLink.href = post.link;
-      titleLink.target = "_blank";
-      titleLink.rel = "noopener noreferrer";
-      titleLink.className = `${titleClass} h6 d-block mb-2 text-decoration-none`;
-      titleLink.textContent = post.title;
+      const titleSpan = document.createElement("span");
+      titleSpan.className = `${titleClass} h6 me-2`;
+      titleSpan.textContent = post.title;
 
       const previewButton = document.createElement("button");
       previewButton.type = "button";
-      previewButton.className = "btn btn-outline-primary btn-sm me-2";
-      previewButton.textContent = "Open";
+      previewButton.className = "btn btn-outline-primary btn-sm";
+      previewButton.textContent = "Просмотр";
       previewButton.dataset.postId = post.id;
 
       const link = document.createElement("a");
       link.href = post.link;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.className = "text-muted small d-block mb-1";
+      link.className = "text-muted small d-block mt-1";
       link.textContent = post.link;
 
       const headerContainer = document.createElement("div");
       headerContainer.className =
         "d-flex justify-content-between align-items-center mb-2";
-      headerContainer.append(titleLink, previewButton);
+      headerContainer.append(titleSpan, previewButton);
 
       postElement.append(headerContainer, link);
       postsContainer.append(postElement);
