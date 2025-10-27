@@ -71,26 +71,26 @@ export function initView(state, i18Instance) {
     const button = document.querySelector('#rss-form button')
 
     switch (value) {
-      case 'validating':
-        input.disabled = true
-        button.textContent = i18n.t('ui.checkingButton')
-        break
-      case 'success':
-        input.disabled = false
-        input.value = ''
-        input.focus()
-        showSuccessMessage('RSS успешно загружен')
-        setTimeout(() => {
-          watchedState.form.status = 'filling'
-        }, 100)
-        break
-      case 'error':
-        input.disabled = false
-        button.textContent = i18n.t('ui.submitButton')
-        break
-      default:
-        input.disabled = false
-        button.textContent = i18n.t('ui.submitButton')
+    case 'validating':
+      input.disabled = true
+      button.textContent = i18n.t('ui.checkingButton')
+      break
+    case 'success':
+      input.disabled = false
+      input.value = ''
+      input.focus()
+      showSuccessMessage('RSS успешно загружен')
+      setTimeout(() => {
+        watchedState.form.status = 'filling'
+      }, 100)
+      break
+    case 'error':
+      input.disabled = false
+      button.textContent = i18n.t('ui.submitButton')
+      break
+    default:
+      input.disabled = false
+      button.textContent = i18n.t('ui.submitButton')
     }
   }
   function showSuccessMessage(message) {
@@ -127,7 +127,7 @@ export function initView(state, i18Instance) {
     }
   }
 
-  function updateErrorDisplay(errors, i18n) {
+  function updateErrorDisplay(errors) {
     const feedbackElement = document.querySelector('.feedback')
     if (!feedbackElement) return
 
@@ -217,7 +217,8 @@ export function initView(state, i18Instance) {
       link.textContent = post.link
 
       const headerContainer = document.createElement('div')
-      headerContainer.className = 'd-flex justify-content-between align-items-center mb-2'
+      headerContainer.className =
+        'd-flex justify-content-between align-items-center mb-2'
       headerContainer.append(titleLink, previewButton)
 
       postElement.append(headerContainer, link)
@@ -232,18 +233,18 @@ export function initView(state, i18Instance) {
     if (!button) return
 
     switch (status) {
-      case 'loading':
-        button.disabled = true
-        button.textContent = i18Instance.t('ui.loadingButton')
-        break
-      case 'succeeded':
-      case 'failed':
-        button.disabled = false
-        button.textContent = i18Instance.t('ui.submitButton')
-        break
-      default:
-        button.disabled = false
-        button.textContent = i18Instance.t('ui.submitButton')
+    case 'loading':
+      button.disabled = true
+      button.textContent = i18Instance.t('ui.loadingButton')
+      break
+    case 'succeeded':
+    case 'failed':
+      button.disabled = false
+      button.textContent = i18Instance.t('ui.submitButton')
+      break
+    default:
+      button.disabled = false
+      button.textContent = i18Instance.t('ui.submitButton')
     }
   }
 
