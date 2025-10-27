@@ -1,57 +1,57 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
-import { state } from "./app/state.js";
-import { initView } from "./view/view.js";
-import { initController } from "./app/controller.js";
-import { initI18n } from "./app/i18n.js";
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './style.css'
+import { state } from './app/state.js'
+import { initView } from './view/view.js'
+import { initController } from './app/controller.js'
+import { initI18n } from './app/i18n.js'
 
 initI18n()
   .then((i18nInstance) => {
-    console.log("i18n готов, создаём приложение...");
+    console.log('i18n готов, создаём приложение...')
 
-    const watchedState = initView(state, i18nInstance);
-    const controller = initController(watchedState, i18nInstance);
+    const watchedState = initView(state, i18nInstance)
+    const controller = initController(watchedState, i18nInstance)
 
-    renderApp(i18nInstance);
-    setupEventListeners(controller, watchedState);
+    renderApp(i18nInstance)
+    setupEventListeners(controller, watchedState)
 
-    controller.startAutoUpdate();
+    controller.startAutoUpdate()
 
-    window.i18n = i18nInstance;
-    window.watchedState = watchedState;
+    window.i18n = i18nInstance
+    window.watchedState = watchedState
   })
   .catch((error) => {
-    console.log("не удалось инициализировать", error);
-  });
+    console.log('не удалось инициализировать', error)
+  })
 
 function renderApp(i18nInstance) {
-  const app = document.getElementById("app");
+  const app = document.getElementById('app')
   app.innerHTML = `
     <div class="container mt-5">
       <div class="text-end mb-3">
         <div class="btn-group" role="group">
           <button type="button" class="btn btn-outline-primary" data-lng="en">
-            ${i18nInstance.t("languages.en")}
+            ${i18nInstance.t('languages.en')}
           </button>
           <button type="button" class="btn btn-outline-primary" data-lng="ru">
-            ${i18nInstance.t("languages.ru")}
+            ${i18nInstance.t('languages.ru')}
           </button>
         </div>
       </div>
       
-      <h1>${i18nInstance.t("ui.title")}</h1>
+      <h1>${i18nInstance.t('ui.title')}</h1>
       <form id="rss-form" class="mt-4" novalidate>
         <div class="mb-3">
           <label for="rss-url" class="form-label">${i18nInstance.t(
-            "ui.urlLabel"
-          )}</label>
+    'ui.urlLabel',
+  )}</label>
           <input type="url" class="form-control" id="rss-url" name="input" aria-label="url"
-                 placeholder="${i18nInstance.t("ui.urlPlaceholder")}">
+                 placeholder="${i18nInstance.t('ui.urlPlaceholder')}">
                  <div class="feedback mt-2"></div>
         </div>
         <button type="submit" class="btn btn-primary">${i18nInstance.t(
-          "ui.submitButton"
-        )}</button>
+    'ui.submitButton',
+  )}</button>
       </form>
       <div id="feed-container" class="mt-4">
         <h2>Feeds</h2>
@@ -76,32 +76,32 @@ function renderApp(i18nInstance) {
       </div>
     </div>
     </div>
-  `;
+  `
 }
 
 function setupEventListeners(controller, watchedState) {
-  document.getElementById("rss-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const url = formData.get("input");
-    controller.handleFormSubmit(url);
-  });
-  document.querySelectorAll("[data-lng]").forEach((button) => {
-    button.addEventListener("click", (e) => {
-      const lng = e.target.dataset.lng;
-      watchedState.ui.lng = lng;
-    });
-  });
-  document.addEventListener("click", (e) => {
+  document.getElementById('rss-form').addEventListener('submit', (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const url = formData.get('input')
+    controller.handleFormSubmit(url)
+  })
+  document.querySelectorAll('[data-lng]').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const lng = e.target.dataset.lng
+      watchedState.ui.lng = lng
+    })
+  })
+  document.addEventListener('click', (e) => {
     if (
-      e.target.classList.contains("btn-outline-primary") &&
-      e.target.textContent === "Просмотр"
+      e.target.classList.contains('btn-outline-primary') &&
+      e.target.textContent === 'Просмотр'
     ) {
-      const postId = e.target.dataset.postId;
-      const post = watchedState.posts.find((p) => p.id === postId);
+      const postId = e.target.dataset.postId
+      const post = watchedState.posts.find((p) => p.id === postId)
       if (post) {
-        controller.showPostModal(post, watchedState);
+        controller.showPostModal(post, watchedState)
       }
     }
-  });
+  })
 }
